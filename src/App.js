@@ -99,6 +99,7 @@ function App() {
   return (
     <div className="App">
       <h1> USE MANGAGMENT APP</h1>
+     <h4>Users Total : {users.length}</h4>
       <div className="topRow">
         <div className="addUserArea">
           <div>
