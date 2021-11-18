@@ -5,6 +5,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 
 
 
+
 function App() {
   const [users, setUsers] = useState([]);
   const [isAddingUser, setIsAddingUser] = useState(false);
@@ -12,7 +13,7 @@ const [formName, setFormName] = useState('');
 const [formUsername, setFormUsername] = useState('');
 const [formEmail, setFormEmail] = useState('');
 
-const backendUrl = "http://localhost:3016";
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const loadUsers =  async () => {
       const response = await fetch(backendUrl);
       const users = await response.json();
@@ -102,6 +103,9 @@ const handleFormSaveButton = (e) => {
   return (
     <div className="App">
       <h1>Edit User App Frontend</h1>
+      <div>
+{/* [{process.env.REACT_APP_BACKEND_URL}]      */}
+ </div>
       <div className="topRow">
         {/* <button>Add User</button> */}
 
