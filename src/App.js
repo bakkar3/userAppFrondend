@@ -7,6 +7,11 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 
 function App() {
   const [users, setUsers] = useState([]);
+  const [isAddingUser, setIsAddingUser] = useState(false);
+const [formName, setFormName] = useState('');
+const [formUsername, setFormUsername] = useState('');
+const [formEmail, setFormEmail] = useState('');
+
 const backendUrl = "http://localhost:3016";
   const loadUsers =  async () => {
       const response = await fetch(backendUrl);
@@ -51,11 +56,93 @@ const backendUrl = "http://localhost:3016";
     loadUsers(); 
 };
 
+// add user
+const handleToggleAddUserArea = () => {
+  setIsAddingUser(!isAddingUser);
+}
+
+const clearForm = () => {
+  setFormName('');
+  setFormUsername('');
+  setFormEmail('');
+}
+const handleCancelAddForm = (e) => {
+  e.preventDefault();
+  clearForm();
+}
+const handleFormEmail = (e) => {
+  setFormEmail(e.target.value);
+}
+const handleFormName = (e) => {
+  setFormName(e.target.value);
+}
+const handleFormUsername = (e) => {
+  setFormUsername(e.target.value);
+}
+const handleFormSaveButton = (e) => {
+  e.preventDefault();
+  (async () => {
+    await fetch(`${backendUrl}/insertuser`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					user: {
+						name: formName,
+						username: formUsername,
+						email: formEmail
+					}
+				})
+			});
+			clearForm();
+			setIsAddingUser(false);
+    loadUsers();
+  })();
+}
+
   return (
     <div className="App">
       <h1>Edit User App Frontend</h1>
       <div className="topRow">
-        <button>Add User</button>
+        {/* <button>Add User</button> */}
+
+        <div className="addUserArea">
+    <div><button onClick={handleToggleAddUserArea}>Add User</button></div>
+    {isAddingUser && (
+        <div className="addUserFormArea">
+            <form>
+                <div className="row">
+                    <label htmlFor="name">Full Name: </label>
+                    <input type="text"
+                        value={formName}
+                        onChange={handleFormName}
+                        id="name" />
+                </div>
+ 
+                <div className="row">
+                    <label htmlFor="username">User Name: </label>
+                    <input type="text"
+                        value={formUsername}
+                        onChange={handleFormUsername}
+                        id="username" />
+                </div>
+ 
+                <div className="row">
+                    <label htmlFor="email">Email: </label>
+                    <input type="text"
+                        value={formEmail}
+                        onChange={handleFormEmail}
+                        id="email" />
+                </div>
+ 
+                <div className="formButtonArea">
+                    <button onClick={(e) => handleFormSaveButton(e)}>Save New User</button>
+                    <button onClick={handleCancelAddForm}>Cancel</button>
+                </div>
+            </form>
+        </div>
+    )}
+</div>
+
       </div>
       <section className="users">
         {users.map((user, index) => {
