@@ -21,7 +21,7 @@ function App() {
 
   useEffect(() => {
     loadUsers();
-  }, [loadUsers]);
+  }, []);
 
   const handelDeleteButton = async (user) => {
     await fetch(`${backendUrl}/deleteuser/${user._id}`, { method: "DELETE" });
@@ -98,7 +98,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Edit User App Frontend</h1>
+      <h1> USE MANGAGMENT APP</h1>
       <div className="topRow">
         <div className="addUserArea">
           <div>
