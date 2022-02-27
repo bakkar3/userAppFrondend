@@ -1,0 +1,19 @@
+// für moongos
+
+export const updateProduct = async (id, updateFields) => {
+  return await PlantModel.findByIdAndUpdate(id, updateFields, { new: true });
+}
+
+
+// UPDATE code
+// nested users: UPDATE
+
+app.patch("/editproduct/:id", async (req, res) => {
+  const id = req.params.id;
+  const price = req.body.price;
+  const result = await PlantsController.updateProduct(id, { $set: { price } });
+  res.json({
+    result,
+  });
+});
+
